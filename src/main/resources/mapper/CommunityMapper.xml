@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.property.mapper.CommunityMapper">
+
+    <insert id="addCommunity">
+        INSERT INTO community(userId,communityId,communityName,cellAddress,areaCovered,developers,property,afforestationRate,tung,household,status,`desc`)
+        VALUES (#{userId, jdbcType=INTEGER},#{communityId, jdbcType=VARCHAR},#{communityName, jdbcType=VARCHAR},#{cellAddress, jdbcType=VARCHAR},#{areaCovered, jdbcType=INTEGER},#{developers, jdbcType=VARCHAR}
+               ,#{property, jdbcType=VARCHAR},#{afforestationRate, jdbcType=INTEGER},#{tung, jdbcType=INTEGER},#{household, jdbcType=INTEGER},#{status, jdbcType=INTEGER},#{desc, jdbcType=VARCHAR})
+    </insert>
+
+    <update id="updateCommunity">
+        UPDATE community SET communityName = #{communityName, jdbcType=VARCHAR}, cellAddress = #{cellAddress, jdbcType=VARCHAR}, areaCovered =#{areaCovered, jdbcType=INTEGER}, developers = #{developers, jdbcType=VARCHAR}
+                , property = #{property, jdbcType=VARCHAR}, afforestationRate = #{afforestationRate, jdbcType=INTEGER}, tung = #{tung, jdbcType=INTEGER}
+                , household = #{household, jdbcType=INTEGER}, status = #{status, jdbcType=INTEGER}, `desc` = #{desc, jdbcType=VARCHAR} WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <delete id="deleteCommunity">
+        DELETE FROM community WHERE id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <select id="selectCommunity" resultType="com.example.property.model.Community">
+        SELECT *
+        FROM community
+        <where>
+            <if test="id != null and id !='' "> and id = #{id,jdbcType=INTEGER}</if>
+        </where>
+    </select>
+
+</mapper>

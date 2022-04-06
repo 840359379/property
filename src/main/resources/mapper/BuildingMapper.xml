@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.property.mapper.BuildingMapper">
+
+    <insert id="addBuilding">
+        INSERT INTO building(buildingsId,communityId,buildingsName,households,`desc`)
+        VALUES (#{buildingsId, jdbcType=VARCHAR},#{communityId, jdbcType=VARCHAR},#{buildingsName, jdbcType=VARCHAR},#{households, jdbcType=INTEGER},#{desc, jdbcType=VARCHAR})
+    </insert>
+
+    <update id="updateBuilding">
+        UPDATE building SET communityId = #{communityId, jdbcType=VARCHAR}, buildingsName = #{buildingsName, jdbcType=VARCHAR},
+                            households = #{households, jdbcType=INTEGER}, `desc` = #{desc, jdbcType=VARCHAR} WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <delete id="deleteBuilding">
+        DELETE FROM building WHERE id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <select id="selectBuilding" resultType="com.example.property.model.Building">
+        SELECT *
+        FROM building
+        <where>
+            <if test="id != null and id !='' "> and id = #{id,jdbcType=INTEGER}</if>
+        </where>
+    </select>
+</mapper>

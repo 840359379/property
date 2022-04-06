@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.property.mapper.PersonnelMapper">
+
+    <insert id="addPersonnel">
+        INSERT INTO personnel(communityId,homeId,personnelId,memberName,birthday,phone,occupation,sex,personnelType,`desc`)
+        VALUES (#{communityId, jdbcType=INTEGER},#{homeId, jdbcType=VARCHAR},#{personnelId, jdbcType=VARCHAR},#{memberName, jdbcType=VARCHAR},#{birthday, jdbcType=VARCHAR}
+            ,#{phone, jdbcType=VARCHAR},#{occupation, jdbcType=VARCHAR},#{sex, jdbcType=INTEGER},#{personnelType, jdbcType=VARCHAR}
+            ,#{desc, jdbcType=VARCHAR})
+    </insert>
+    <update id="updatePersonnel">
+        UPDATE personnel
+        SET communityId = #{communityId, jdbcType=VARCHAR}, homeId = #{homeId, jdbcType=VARCHAR}
+          , memberName =#{memberName, jdbcType=VARCHAR}, birthday = #{birthday, jdbcType=VARCHAR}
+          , phone = #{phone, jdbcType=VARCHAR}, occupation = #{occupation, jdbcType=VARCHAR}
+          , sex = #{sex, jdbcType=VARCHAR}, personnelType = #{personnelType,jdbcType=VARCHAR}
+          , `desc` = #{desc, jdbcType=VARCHAR}
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+    <delete id="deletePersonnel">
+        DELETE FROM personnel WHERE id = #{id,jdbcType=INTEGER}
+    </delete>
+    <select id="selectPersonnel" resultType="com.example.property.model.Personnel">
+        SELECT *
+        FROM personnel
+        <where>
+            <if test="id != null and id !='' "> and id = #{id,jdbcType=INTEGER}</if>
+        </where>
+    </select>
+</mapper>

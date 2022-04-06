@@ -22,11 +22,21 @@ public class LoginController {
     @Autowired
     private LonginService longinService;
 
+    /**
+     * 进入登陆页面
+     * @return
+     */
     @RequestMapping(value = "index")
     public String index() {
         return "login";
     }
 
+    /**
+     * 登录
+     * @param user
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "verification")
     @ResponseBody
     public CommonResult verification(User user, HttpServletRequest request) {
@@ -38,6 +48,17 @@ public class LoginController {
         }
         user.setPassword("******");
         return new CommonResult(200,"操作成功",bronUser);
+    }
+
+    /**
+     * 退出登录
+     * @param request
+     * @return
+     */
+    @RequestMapping(value = "secede")
+    public String secede(HttpServletRequest request){
+        request.getSession().removeAttribute("user");
+        return "login";
     }
 
 }

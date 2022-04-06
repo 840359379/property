@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <title>
-        宠物列表
+        房产管理
     </title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -20,8 +19,8 @@
 <div class="x-nav">
             <span class="layui-breadcrumb">
               <a><cite>首页</cite></a>
-              <a><cite>小区管理</cite></a>
-              <a><cite>宠物列表</cite></a>
+              <a><cite>房产管理</cite></a>
+              <a><cite>房产列表</cite></a>
             </span>
     <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"  href="javascript:location.replace(location.href);" title="刷新"><i class="layui-icon" style="line-height:30px">ဂ</i></a>
 </div>
@@ -46,77 +45,51 @@
         </div>
     </form>
     <xblock>
-        <button class="layui-btn layui-btn-danger" onclick="delAll()">
-            <i class="layui-icon">&#xe640;</i>批量删除
-        </button>
-        <button class="layui-btn" onclick="question_add('添加','pet_add.html','1000','600')">
+        <button class="layui-btn" onclick="home_add('添加','home/homeAdd','1000','600')">
             <i class="layui-icon">&#xe608;</i>添加
         </button>
-        <span class="x-right" style="line-height:40px">共有数据：<span class="layui-badge">1</span> 条</span></xblock>
+        <span class="x-right" style="line-height:40px">共有数据：<span th:text="${homeList.size()}"></span> 条</span>
+    </xblock>
     <table class="layui-table">
         <thead>
         <tr>
-            <th>
-                <input type="checkbox" name="" value="">
-            </th>
-            <th>
-                ID
-            </th>
-            <th>
-                宠物照片
-            </th>
-            <th>
-                所属成员
-            </th>
-            <th>
-                宠物名称
-            </th>
-            <th>
-                宠物颜色
-            </th>
-            <th>
-                备注
-            </th>
-            <th>
-                收养时间
-            </th>
-            <th>
-                创建时间
-            </th>
-            <th>
-                操作
-            </th>
+            <th>ID</th>
+            <th>所属小区</th>
+            <th>栋数</th>
+            <th>房产编码</th>
+            <th>房产名称</th>
+            <th>户主名称</th>
+            <th>联系方式</th>
+            <th>房间数</th>
+            <th>单元</th>
+            <th>楼层</th>
+            <th>描述</th>
+            <th>入住时间</th>
+            <th>操作</th>
         </tr>
         </thead>
-        <tbody id="x-img">
-        <tr>
+        <tbody id="ches">
+        <tr th:each="home:${homeList}">
+            <td th:text="${home.id}"></td>
             <td>
-                <input type="checkbox" value="1" name="">
+                <u style="cursor:pointer" onclick="question_show()" th:text="${home.communityId}">金华万府</u>
             </td>
-            <td>
-                2                        </td>
-            <td>
-                <img src="./images/tx.jpg" width="50" height="30">
-            </td>
-            <td >
-                admin                        </td>
-            <td >
-                小星星                        </td>
-            <td >
-                黄色                        </td>
-            <td >
-                测试                        </td>
-            <td >
-                2020-01-02                        </td>
-
-            <td >
-                2020-01-02 22:22:46                        </td>
+            <td th:text="${home.buildingId}"></td>
+            <td th:text="${home.homeId}"></td>
+            <td th:text="${home.homeName}"></td>
+            <td th:text="${home.householder}"></td>
+            <td th:text="${home.phone}"></td>
+            <td th:text="${home.homeNumber}"></td>
+            <td th:text="${home.unitBuilding}" ></td>
+            <td th:text="${home.floor}"></td>
+            <td th:text="${home.desc}"></td>
+            <td th:text="${home.rzTime}"></td>
             <td class="td-manage">
-                <a title="编辑" href="javascript:;" onclick="qpet_edit('编辑','pet_add.html','2','1000','600')"
+                <a title="编辑" href="javascript:;" onclick="home_edit('编辑','home/homeAdd',this,'1000','600')" th:class="${home.id}"
                    class="ml-5" style="text-decoration:none">
                     <i class="layui-icon">&#xe642;</i>
                 </a>
-                <a title="删除" href="javascript:;" onclick="pet_del(this,'2')"
+                <a title="删除" href="javascript:;" th:onclick="'question_del(this,'+${home.id}+')'"
                    style="text-decoration:none">
                     <i class="layui-icon">&#xe640;</i>
                 </a>
@@ -125,10 +98,10 @@
         </tbody>
     </table>
 
-    <div id="page"><ul class="pagination"><li class="disabled"><span>&laquo;</span></li> <li class="active"><span>1</span></li><li><a href="/xiyuan/Owners/pet_list?page=2">2</a></li> <li><a href="/xiyuan/Owners/pet_list?page=2">&raquo;</a></li></ul></div>
+    <div id="page"></div>
 </div>
-<script src="lib/layui/layui.js" charset="utf-8"></script>
-<script src="js/x-layui.js" charset="utf-8"></script>
+<script th:src="@{/static/lib/layui/layui.js}" charset="utf-8"></script>
+<script th:src="@{/static/js/x-layui.js}" charset="utf-8"></script>
 <script>
     layui.use(['laydate','element','laypage','layer'], function(){
         $ = layui.jquery;//jquery
@@ -138,13 +111,6 @@
         layer = layui.layer;//弹出层
         okLoading.close($);
         //以上模块根据需要引入
-        layer.ready(function(){ //为了layer.ext.js加载完毕再执行
-            layer.photos({
-                photos: '#x-img'
-                //,shift: 5 //0-6的选择，指定弹出图片动画类型，默认随机
-            });
-        });
-
 
 
         var start = {
@@ -176,54 +142,47 @@
         }
     });
 
-    //批量删除提交
-    function delAll () {
-        layer.confirm('确认要删除吗？',function(index){
-            //捉到所有被选中的，发异步进行删除
-            layer.msg('删除成功', {icon: 1});
-        });
-    }
-
     function question_show (argument) {
         layer.msg('可以跳到前台具体问题页面',{icon:1,time:1000});
     }
     /*添加*/
-    function question_add(title,url,w,h){
+    function home_add(title,url,w,h){
         x_admin_show(title,url,w,h);
     }
     //编辑
-    function qpet_edit (title,url,id,w,h) {
-        url = url+"?id="+id;
+    function home_edit (title,url,me,w,h) {
+        url = url+"?id="+me.className;
         x_admin_show(title,url,w,h);
     }
 
     /*删除*/
-    function pet_del(obj,id){
-        layer.confirm('确认要删除吗？',{icon:3,title:'提示信息'},function(index){
+    function question_del(obj,id){
+        layer.confirm('确认要删除吗？',function(index){
+            //发异步删除数据
             $.ajax({
-                type:"post",
-                url:"xxx",
+                type:"get",
+                url:"/home/delete",
                 data:{id:id},
                 dataType:"json",
                 success:function(data){
-                    //console.log(data);
-                    if(data.status==1){
+                    if(data.code == 200){
                         //发异步删除数据
                         $(obj).parents("tr").remove();
-                        layer.msg(data.info,{icon:6,time:1000});
-                        setTimeout(function(){
+                        layer.msg(data.message,{icon:6,time:1000}); setTimeout(function(){
                             window.location.reload();
                         },1000);return false;
                     } else{
-                        layer.msg(data.info,{icon:5,time:1000});return false;
+                        layer.msg(data.message,{icon:5,time:1000});return false;
                     }
                 }
             });
-            //发异步删除数据
             $(obj).parents("tr").remove();
             layer.msg('已删除!',{icon:1,time:1000});
         });
     }
+
+
+
 </script>
 
 </body>

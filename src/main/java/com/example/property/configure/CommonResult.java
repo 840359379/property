@@ -8,34 +8,36 @@
 
 package com.example.property.configure;
 
+import java.io.Serializable;
+
 /**
  * 传给前端的一个封装
  * @param <T>
  */
-public class CommonResult<T>{
+public class CommonResult<T> implements Serializable {
 
     private Integer code;
-    private String msg;
+    private String message;
     private Integer count;
     private T data;
 
-    public CommonResult(Integer code, String msg, Integer count, T data) {
+    public CommonResult(Integer code, String message, Integer count, T data) {
         this.code = code;
-        this.msg = msg;
+        this.message = message;
         this.count = count;
         this.data = data;
     }
 
-    public CommonResult(Integer code, String msg, T data){
+    public CommonResult(Integer code, String message, T data){
         this.code = code;
-        this.msg = msg;
+        this.message = message;
         this.data = data;
         this.count = 0;
     }
 
-    public CommonResult(Integer code, String msg){
+    public CommonResult(Integer code, String message){
         this.code = code;
-        this.msg = msg;
+        this.message = message;
         this.data = null;
         this.count = 0;
     }
@@ -59,12 +61,12 @@ public class CommonResult<T>{
         this.data = data;
     }
 
-    public String getMsg() {
-        return msg;
+    public String getMessage() {
+        return message;
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public Integer getCount() {
@@ -79,7 +81,7 @@ public class CommonResult<T>{
     public String toString() {
         return "CommonResult{" +
                 "code=" + code +
-                ", msg='" + msg + '\'' +
+                ", msg='" + message + '\'' +
                 ", count=" + count +
                 ", data=" + data +
                 '}';

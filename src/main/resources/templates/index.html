@@ -67,10 +67,10 @@
                 <li class="layui-nav-item"> <a href="javascript:;"><p th:text="${user.name}"></p></a>
                     <dl class="layui-nav-child">
                         <!-- 二级菜单 -->
-                        <dd><a href="javascript:;"  onclick="one_set('个人信息','one_set','1000','600')">个人信息</a>
+                        <dd><a href="javascript:;"  onclick="oneSet('个人信息','homepage/oneSet','1000','600')">个人信息</a>
                         </dd>
                         <dd><a href="">切换帐号</a></dd>
-                        <dd><a href="javascript:;" onclick="logout()">退出</a></dd>
+                        <dd><a href="/login/secede">退出</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item x-index"><a href="#"></a></li>
@@ -100,17 +100,17 @@
                 <li class="layui-nav-item"> <a class="javascript:;" href="javascript:;"> <i class="iconfont icon-dashaxiaoqudizhi01" style="top: 3px;"></i><cite>小区管理</cite> </a>
                     <dl class="layui-nav-child">
                         <dd class="">
-                        <dd class=""> <a href="javascript:;" _href="communitylist"> <cite>小区列表</cite> </a> </dd>
+                        <dd class=""> <a href="javascript:;" _href="/community/communityList"> <cite>小区列表</cite> </a> </dd>
                         </dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item"> <a class="javascript:;" href="javascript:;"> <i class="layui-icon iconfont icon-lvhuaxiaoqu" style="top: 3px;"></i><cite>房产管理</cite> </a>
                     <dl class="layui-nav-child">
                         <dd class="">
-                        <dd class=""> <a href="javascript:;" _href="homelist"> <cite>房产管理</cite> </a> </dd>
+                        <dd class=""> <a href="javascript:;" _href="/home/homeList"> <cite>房产管理</cite> </a> </dd>
                         </dd>
                         <dd class="">
-                        <dd class=""> <a href="javascript:;" _href="buildinglst"> <cite>栋数管理</cite> </a> </dd>
+                        <dd class=""> <a href="javascript:;" _href="/building/buildingList"> <cite>栋数管理</cite> </a> </dd>
                         </dd>
 
                     </dl>
@@ -118,51 +118,50 @@
                 <li class="layui-nav-item"> <a class="javascript:;" href="javascript:;"> <i class="layui-icon iconfont icon-yezhuxian" style="top: 3px;"></i><cite>业主信息管理</cite> </a>
                     <dl class="layui-nav-child">
                         <dd class="">
-                        <dd class=""> <a href="javascript:;" _href="personnel_list"> <cite>人员管理</cite> </a> </dd>
-                        <dd class=""> <a href="javascript:;" _href="vehicle_list"> <cite>车辆管理</cite> </a> </dd>
-                        <dd class=""> <a href="javascript:;" _href="pet_list"> <cite>宠物管理</cite> </a> </dd>
+                        <dd class=""> <a href="javascript:;" _href="/personnel/personnelList"> <cite>人员管理</cite> </a> </dd>
+                        <dd class=""> <a href="javascript:;" _href="/vehicle/vehicleList"> <cite>车辆管理</cite> </a> </dd>
                         </dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item"> <a class="javascript:;" href="javascript:;"> <i class="layui-icon iconfont icon-tingchewei" style="top: 3px;"></i><cite>停车位管理</cite> </a>
                     <dl class="layui-nav-child">
                         <dd class="">
-                        <dd class=""> <a href="javascript:;" _href="parkinglist"> <cite>车位管理</cite> </a> </dd>
-                        <dd class=""> <a href="javascript:;" _href="parkingusagelist"> <cite>车位使用管理</cite> </a> </dd>
+                        <dd class=""> <a href="javascript:;" _href="/parking/parkingList"> <cite>车位管理</cite> </a> </dd>
+                        <dd class=""> <a href="javascript:;" _href="parkingUsageList"> <cite>车位使用管理</cite> </a> </dd>
                         </dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item"> <a class="javascript:;" href="javascript:;"> <i class="layui-icon iconfont icon-fuwu" style="top: 3px;"></i><cite>服务管理</cite> </a>
                     <dl class="layui-nav-child">
-                        <dd class=""> <a href="javascript:;" _href="activity_list"> <cite>活动管理</cite> </a> </dd>
-                        <dd class=""> <a href="javascript:;" _href="repairlist"> <cite>报修管理</cite> </a> </dd>
-                        <dd class=""> <a href="javascript:;" _href="complainlist"> <cite>投诉管理</cite> </a> </dd>
-                        <dd class=""> <a href="javascript:;" _href="mailboxlist"> <cite>信箱管理</cite> </a> </dd>
+                        <dd class=""> <a href="javascript:;" _href="activityList"> <cite>活动管理</cite> </a> </dd>
+                        <dd class=""> <a href="javascript:;" _href="repairList"> <cite>报修管理</cite> </a> </dd>
+                        <dd class=""> <a href="javascript:;" _href="complainList"> <cite>投诉管理</cite> </a> </dd>
+                        <dd class=""> <a href="javascript:;" _href="mailboxList"> <cite>信箱管理</cite> </a> </dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item"> <a class="javascript:;" href="javascript:;"> <i class="layui-icon iconfont icon-zichan" style="top: 3px;"></i><cite>资产管理</cite> </a>
                     <dl class="layui-nav-child">
-                        <dd class=""> <a href="javascript:;" _href="device_list"> <cite>资产设备列表</cite> </a> </dd>
+                        <dd class=""> <a href="javascript:;" _href="deviceList"> <cite>资产设备列表</cite> </a> </dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item"> <a class="javascript:;" href="javascript:;"> <i class="layui-icon iconfont icon-shoufeizhan" style="top: 3px;"></i><cite>收费管理</cite> </a>
                     <dl class="layui-nav-child">
-                        <dd class=""> <a href="javascript:;" _href="pro_list"> <cite>收费项目</cite> </a> </dd>
-                        <dd class=""> <a href="javascript:;" _href="promx_list"> <cite>收费明细管理</cite> </a> </dd>
+                        <dd class=""> <a href="javascript:;" _href="proList"> <cite>收费项目</cite> </a> </dd>
+                        <dd class=""> <a href="javascript:;" _href="proMxList"> <cite>收费明细管理</cite> </a> </dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item"> <a class="javascript:;" href="javascript:;"> <i class="layui-icon" style="top: 3px;">&#xe613;</i><cite>管理员管理</cite> </a>
                     <dl class="layui-nav-child">
-                        <dd class=""> <a href="javascript:;" _href="adminlist"> <cite>管理员列表</cite> </a> </dd>
-                        <dd class=""> <a href="javascript:;" _href="admingroup"> <cite>用户组管理</cite> </a> </dd>
-                        <dd class=""> <a href="javascript:;" _href="authrule"> <cite>权限管理</cite> </a> </dd>
+                        <dd class=""> <a href="javascript:;" _href="adminList"> <cite>管理员列表</cite> </a> </dd>
+                        <dd class=""> <a href="javascript:;" _href="adminGroup"> <cite>用户组管理</cite> </a> </dd>
+                        <dd class=""> <a href="javascript:;" _href="authRule"> <cite>权限管理</cite> </a> </dd>
                     </dl>
                 </li>
 
                 <li class="layui-nav-item"> <a class="javascript:;" href="javascript:;"> <i class="layui-icon" style="top: 3px;">&#xe614;</i><cite>系统设置</cite> </a>
                     <dl class="layui-nav-child">
                         <dd class=""> <a href="javascript:;" _href="system"> <cite>系统设置</cite> </a> </dd>
-                        <dd class=""> <a href="javascript:;" _href="one_set"> <cite>个人设置</cite> </a> </dd>
+                        <dd class=""> <a href="javascript:;" _href="oneSet"> <cite>个人设置</cite> </a> </dd>
 
                     </dl>
                 </li>
@@ -307,32 +306,8 @@
         //以上模块根据需要引入
 
     });
-    /**
-     * 退出登陆
-     * 2019年8月17日19:43:15
-     */
-    function logout() {
 
-        $.ajax({
-            type:"post",
-            url:"xxxxx",
-            data:{e:1},
-            dataType:"json",
-            success:function (data) {
-                if(data.status==1){
-                    layer.msg(data.info,{icon:1,time:1000});
-                    setTimeout("window.location.href='xxxx'",2000);return false;
-                    return false;
-                }else{
-                    layer.msg(data.info,{icon:5,time:2000});return false;
-                }
-            }
-
-        })
-        return false;
-    }
-
-    function one_set(title,url,w,h){
+    function oneSet(title,url,w,h){
         x_admin_show(title,url,w,h);
     }
 </script>
