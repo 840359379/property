@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.property.mapper.ParkingUsageMapper">
+
+    <insert id="addParkingUsage">
+        INSERT INTO parkingusage(communityId,parkId,vehName,vehHphm,phone,money,status,startTime,endTime)
+        VALUES (#{communityId, jdbcType=VARCHAR},#{parkId, jdbcType=VARCHAR},#{vehName, jdbcType=VARCHAR},#{vehHphm, jdbcType=VARCHAR},#{phone, jdbcType=VARCHAR}
+               ,#{money, jdbcType=INTEGER},#{status, jdbcType=INTEGER},#{startTime},#{endTime})
+    </insert>
+    <update id="updateParkingUsage">
+        UPDATE parkingusage
+        SET communityId = #{communityId, jdbcType=VARCHAR}, parkId = #{parkId, jdbcType=VARCHAR}
+          , vehName =#{vehName, jdbcType=VARCHAR}, vehHphm = #{vehHphm, jdbcType=VARCHAR}
+          , phone = #{phone, jdbcType=VARCHAR}, money = #{money, jdbcType=VARCHAR}
+          , status = #{status, jdbcType=VARCHAR}, startTime = #{startTime}
+          , endTime = #{endTime}
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+    <delete id="deleteParkingUsage">
+        DELETE FROM parkingusage WHERE id = #{id,jdbcType=INTEGER}
+    </delete>
+    <select id="selectParkingUsage" resultType="com.example.property.model.ParkingUsage">
+        SELECT *
+        FROM parkingusage
+        <where>
+            <if test="id != null and id !='' "> and id = #{id,jdbcType=INTEGER}</if>
+        </where>
+    </select>
+</mapper>

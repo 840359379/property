@@ -25,13 +25,6 @@ public class HomepageController {
         return "welcome";
     }
 
-    @RequestMapping(value = "parkingUsageList")
-    public String parkingUsageList(HttpServletRequest request,Model model){
-        User user = (User) request.getSession().getAttribute("user");
-        model.addAttribute("user",user);
-        return "parkingUsageList";
-    }
-
     @RequestMapping(value = "activityList")
     public String activityList(HttpServletRequest request,Model model){
         User user = (User) request.getSession().getAttribute("user");

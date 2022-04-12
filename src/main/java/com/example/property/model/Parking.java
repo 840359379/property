@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class Parking {
 
+    private Integer id;
     /**
      * 小区编号
      */
@@ -28,6 +29,14 @@ public class Parking {
      * 创建时间
      */
     private Date creationTime;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getCommunityId() {
         return communityId;

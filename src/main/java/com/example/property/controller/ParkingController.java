@@ -2,6 +2,7 @@ package com.example.property.controller;
 
 import com.example.property.configure.CommonResult;
 import com.example.property.model.*;
+import com.example.property.service.CommunityService;
 import com.example.property.service.ParkingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,26 +18,31 @@ import java.util.List;
 public class ParkingController {
 
     @Autowired
+    private CommunityService communityService;
+
+    @Autowired
     private ParkingService parkingService;
 
     @RequestMapping(value = "parkingList")
     public String parkingList(HttpServletRequest request, Model model){
         User user = (User) request.getSession().getAttribute("user");
+        List<Parking> parkingList = parkingService.selectParking(new Parking()).getData();
+        model.addAttribute("parkingList", parkingList);
         model.addAttribute("user",user);
         return "parkingList";
     }
 
     @RequestMapping(value = "parkAdd")
     public String homeAdd(HttpServletRequest request, Model model, Parking parking){
-//        model.addAttribute("communityList",communityService.selectCommunity(new Community()).getData());
+        model.addAttribute("communityList",communityService.selectCommunity(new Community()).getData());
 //        model.addAttribute("personnelList",personnelService.selectPersonnel(new Personnel()).getData());
-//        List<Vehicle> vehicleList =  vehicleService.selectVehicle(vehicle).getData();
-//        if(vehicle.getId() != null){
-//            model.addAttribute("vehicle",vehicleList.get(0));
-//            model.addAttribute("status",2);
-//        }else {
-//            model.addAttribute("status",1);
-//        }
+        List<Parking> parkingList =  parkingService.selectParking(parking).getData();
+        if(parking.getId() != null){
+            model.addAttribute("parking",parkingList.get(0));
+            model.addAttribute("status",2);
+        }else {
+            model.addAttribute("status",1);
+        }
         return "parkAdd";
     }
 

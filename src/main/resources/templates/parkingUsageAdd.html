@@ -12,8 +12,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="format-detection" content="telephone=no">
-    <link rel="stylesheet" href="css/main.css" media="all">
-    <script type="text/javascript" src="lib/loading/okLoading.js"></script>
+    <link rel="stylesheet" th:href="@{/static/css/main.css}" media="all">
+    <script type="text/javascript" th:src="@{/static/lib/loading/okLoading.js}"></script>
     <style>
         .imgs{display: none;}
         .picture{display: none;}
@@ -36,11 +36,9 @@
                             <span class='x-red'>*</span>所属小区
                         </label>
                         <div class="layui-input-block">
-                            <select name="community_id" id="community_id" lay-filter="aihao">
-
-                                <option value="0">顶级栏目</option>
-                                <option value="1" >东湖小区</option>
-                                <option value="2" >金华万府</option>
+                            <select name="communityId" id="communityId">
+                                <option th:value="${community.communityId}" th:text="${community.communityName}"
+                                        th:each="community:${communityList}" th:checked="${status == 2 ?community.communityId == parkingUsage.communityId : ''}"></option>
                             </select>
                         </div>
                     </div>
@@ -49,10 +47,9 @@
                             <span class='x-red'>*</span>车位编号
                         </label>
                         <div class="layui-input-block">
-                            <select name="parking_id" id="parking_id">
-
-                                <option value="0">顶级栏目</option>
-
+                            <select name="parkId" id="parkId">
+                                <option th:value="${parking.parkId}" th:text="${parking.parkId}"
+                                        th:each="parking:${parkingList}" th:checked="${status == 2 ? parking.parkId == parkingUsage.parkId : ''}"></option>
                             </select>
                         </div>
                     </div>
@@ -62,8 +59,8 @@
                             <span class='x-red'>*</span>车辆所有人
                         </label>
                         <div class="layui-input-block">
-                            <input type="text" name="veh_name" autocomplete="off" placeholder="空制在80个汉字，160个字符以内"
-                                   class="layui-input" value="">
+                            <input type="text" name="vehName" autocomplete="off" placeholder="空制在80个汉字，160个字符以内"
+                                   class="layui-input" th:value="${status == 2 ? parkingUsage.vehName : ''}">
                         </div>
                     </div>
                     <div class="layui-form-item">
@@ -71,8 +68,8 @@
                             <span class='x-red'>*</span>车牌号
                         </label>
                         <div class="layui-input-block">
-                            <input type="text" name="veh_hphm" autocomplete="off" placeholder="空制在80个汉字，160个字符以内"
-                                   class="layui-input" value="">
+                            <input type="text" name="vehHphm" autocomplete="off" placeholder="空制在80个汉字，160个字符以内"
+                                   class="layui-input" th:value="${status == 2 ? parkingUsage.vehHphm : ''}">
                         </div>
                     </div>
                     <div class="layui-form-item">
@@ -81,7 +78,7 @@
                         </label>
                         <div class="layui-input-block">
                             <input type="text" name="phone" autocomplete="off" placeholder="空制在80个汉字，160个字符以内"
-                                   class="layui-input" value="">
+                                   class="layui-input" th:value="${status == 2 ? parkingUsage.phone : ''}">
                         </div>
                     </div>
                     <div class="layui-form-item">
@@ -90,7 +87,7 @@
                         </label>
                         <div class="layui-input-block">
                             <input type="text" name="money" autocomplete="off" placeholder="空制在80个汉字，160个字符以内"
-                                   class="layui-input" value="">
+                                   class="layui-input" th:value="${status == 2 ? parkingUsage.money : ''}">
                         </div>
                     </div>
                     <div class="layui-form-item">
@@ -98,52 +95,23 @@
                             <span class='x-red'>*</span>使用性质
                         </label>
                         <div class="layui-input-block">
-                            <input type="radio" name="status" value="1" title="租" >
+                            <input type="radio" name="status" value="1" title="租" th:checked="${status == 2 ? parkingUsage.status == 1 : ''}">
                             <div class="layui-unselect layui-form-radio layui-form-radioed"><i class="layui-anim layui-icon layui-anim-scaleSpring"></i>
                                 <div>租</div>
                             </div>
-                            <input type="radio" name="status" value="0" title="售" checked="checked">
+                            <input type="radio" name="status" value="0" title="售" th:checked="${status == 2 ? parkingUsage.status == 0: ''}">
                             <div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i>
                                 <div>售</div>
                             </div>
                         </div>
                     </div>
                     <div class="layui-form-item">
-                        <label for="link" class="layui-form-label">
-                            <span class="x-red">*</span>车辆牌照
-                        </label>
-                        <div class="layui-input-inline">
-                            <div class="site-demo-upbar">
-                                <div class=" layui-upload-button" style="border:#FFFFFF ;">
-                                    <!--<form target="layui-upload-iframe" method="post" key="set-mine" enctype="multipart/form-data" action="">
-                                        <input type="file" class="layui-upload-file"  id="previewImg" name="images" onchange="upload()">
-                                    </form>
-                                    <span class="layui-upload-icon"><i class="layui-icon"></i>上传图片</span>-->
-                                    <button type="button" class="layui-btn" id="test1">
-                                        <i class="layui-icon">&#xe67c;</i>上传图片
-                                    </button>
-                                    <input class="layui-upload" type="file" accept="undefined" id="previewImg" name="images" onchange="upload(this,)">
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <a href="javascript:;" style="" class="layui-btn " id="cancel"><i class="layui-icon">ဂ</i>撤销上传</a>
-                    </div>
-                    <div class="layui-form-item imgs" id="imgshow">
-                        <label  class="layui-form-label">车辆牌照展示
-                        </label>
-
-                        <img src="" id="pimages" name="pimages" style="width: 400px;height: 200px;"/>
-                        <input id="avatar"   name="image" required="" type="hidden"  value="">
-                    </div>
-                    <div class="layui-form-item">
                         <label class="layui-form-label">
                             <span class='x-red'>*</span>开始时间
                         </label>
 
                         <div class="layui-input-inline">
-                            <input class="layui-input" name="start_time" placeholder="开始时间" id="LAY_demorange_s" value="" >
+                            <input class="layui-input" name="startTime" placeholder="开始时间" id="LAY_demorange_s" th:value="${status == 2 ? parkingUsage.startTime : ''}" >
                         </div>
 
                     </div>
@@ -153,28 +121,15 @@
                         </label>
 
                         <div class="layui-input-inline">
-                            <input class="layui-input" name="end_time" placeholder="开始时间" id="END_demorange_s" value="" >
+                            <input class="layui-input" name="endTime" placeholder="开始时间" id="END_demorange_s" th:value="${status == 2 ? parkingUsage.endTime : ''}" >
                         </div>
 
                     </div>
-
-
-                    <!--<div class="layui-form-item">
-                        <label class="layui-form-label">
-                            <span class='x-red'>*</span>外链地址
-                        </label>
-                        <div class="layui-input-block">
-                            <input type="text" name="link" value="" autocomplete="off" placeholder="请以“http://”开头"
-                            class="layui-input">
-                        </div>
-                    </div>-->
-
                     <div class="layui-form-item">
                         <button class="layui-btn" type="button" lay-filter="add" lay-submit="">
                             保存
                         </button>
                     </div>
-                    <!--</form>-->
                     <div style="height:100px;"></div>
                 </div>
 
@@ -185,8 +140,8 @@
         </div>
     </form>
 </div>
-<script src="lib/layui/layui.js" charset="utf-8"></script>
-<script src="js/x-layui.js" charset="utf-8"></script>
+<script th:src="@{/static/lib/layui/layui.js}" charset="utf-8"></script>
+<script th:src="@{/static/js/x-layui.js}" charset="utf-8"></script>
 
 <script>
     layui.use(['laydate','element','layer','form'], function(){
@@ -215,15 +170,6 @@
             start.elem = this;
             laydate(start);
         };
-        //图片上传接口
-        /*layui.upload({
-          url: './upload.json' //上传接口
-          ,success: function(res){ //上传成功后的回调
-              console.log(res);
-            $('#LAY_demo_upload').attr('src',res.url);
-          }
-        });*/
-
 
         //监听提交
         form.on('submit(add)', function(data){
@@ -264,16 +210,23 @@
             if(status==""){
                 layer.msg('使用性质不能为空',{icon:5,time:2000});return false;
             }
-            var data=data.field;
+            let url;
+            let field = data.field;
+            if(location.href.split("=")[1] == undefined){
+                url = "/parkingUsage/add";
+            }else {
+                url = "/parkingUsage/update";
+                field.id = location.href.split("=")[1];
+            }
             $.ajax({
-                type:"post",
-                url:"xxx",
-                data:data,
+                type:"get",
+                url:url,
+                data:field,
                 dataType:"json",
                 success:function(data){
                     //alert(1);
-                    if(data.status==1){
-                        layer.msg(data.info, {icon: 6,time:2000},function () {
+                    if(data.code == 200){
+                        layer.msg(data.message, {icon: 6,time:2000},function () {
                             window.parent.location.reload();
                             var index = parent.layer.getFrameIndex(window.name);
                             parent.layer.close(index);
@@ -282,7 +235,7 @@
 
                     }
                     else{
-                        layer.msg(data.info,{icon:5,time:2000});return false;
+                        layer.msg(data.message,{icon:5,time:2000});return false;
                     }
                 }
 

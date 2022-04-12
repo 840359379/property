@@ -46,9 +46,6 @@
         </div>
     </form>
     <xblock>
-        <button class="layui-btn layui-btn-danger" onclick="delAll()">
-            <i class="layui-icon">&#xe640;</i>批量删除
-        </button>
         <button class="layui-btn" onclick="park_add('添加车位','parking/parkAdd','1000','600')">
             <i class="layui-icon">&#xe608;</i>添加
         </button>
@@ -66,108 +63,20 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>
-                5                        </td>
-            <td>
-                金华万府                        </td>
-
-            <td >
-                XY20200103004                        </td>
-            <td >
-                车位测试2111111111111111                        </td>
-            <td >
-                2020-01-03 22:01:49                        </td>
+        <tr th:each="parking:${parkingList}">
+            <td th:text="${parking.id}"></td>
+            <td th:text="${parking.communityId}"></td>
+            <td th:text="${parking.parkId}"></td>
+            <td th:text="${parking.parkName}"></td>
+            <td th:text="${parking.creationTime}"></td>
             <td class="td-status"> <span class="layui-btn layui-btn-normal " onclick="start(this,'5',0)"> 使用中 </span>
             </td>
             <td class="td-manage">
-                <a title="编辑" href="javascript:;" onclick="park_edit('编辑','parking/parkAdd','5','','510')"
+                <a title="编辑" href="javascript:;" onclick="park_edit('编辑','parking/parkAdd',this,'','510')" th:name="${parking.id}"
                    class="ml-5" style="text-decoration:none">
                     <i class="layui-icon">&#xe642;</i>
                 </a>
-                <a title="删除" href="javascript:;" onclick="park_del(this,'5')"
-                   style="text-decoration:none">
-                    <i class="layui-icon">&#xe640;</i>
-                </a>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <input type="checkbox" value="1" name="">
-            </td>
-            <td>
-                4                        </td>
-            <td>
-                东湖小区                        </td>
-
-            <td >
-                XY20200103003                        </td>
-            <td >
-                车位测试                        </td>
-            <td >
-                2020-01-03 22:00:52                        </td>
-            <td class="td-status"> <span class="layui-btn layui-btn-danger " onclick="start(this,'4',1)"> 闲置中 </span> </td>
-            <td class="td-manage">
-                <a title="编辑" href="javascript:;" onclick="park_edit('编辑','parking/parkAdd','4','','510')"
-                   class="ml-5" style="text-decoration:none">
-                    <i class="layui-icon">&#xe642;</i>
-                </a>
-                <a title="删除" href="javascript:;" onclick="park_del(this,'4')"
-                   style="text-decoration:none">
-                    <i class="layui-icon">&#xe640;</i>
-                </a>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <input type="checkbox" value="1" name="">
-            </td>
-            <td>
-                3                        </td>
-            <td>
-                金华万府                        </td>
-
-            <td >
-                XY20200103002                        </td>
-            <td >
-                测试2                        </td>
-            <td >
-                2020-01-03 21:57:11                        </td>
-            <td class="td-status"> <span class="layui-btn layui-btn-danger " onclick="start(this,'3',1)"> 闲置中 </span> </td>
-            <td class="td-manage">
-                <a title="编辑" href="javascript:;" onclick="park_edit('编辑','park_add.html','3','','510')"
-                   class="ml-5" style="text-decoration:none">
-                    <i class="layui-icon">&#xe642;</i>
-                </a>
-                <a title="删除" href="javascript:;" onclick="park_del(this,'3')"
-                   style="text-decoration:none">
-                    <i class="layui-icon">&#xe640;</i>
-                </a>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <input type="checkbox" value="1" name="">
-            </td>
-            <td>
-                2                        </td>
-            <td>
-                东湖小区                        </td>
-
-            <td >
-                XY20200103001                        </td>
-            <td >
-                发送到                        </td>
-            <td >
-                2020-01-03 21:46:30                        </td>
-            <td class="td-status"> <span class="layui-btn layui-btn-normal " onclick="start(this,'2',0)"> 使用中 </span>
-            </td>
-            <td class="td-manage">
-                <a title="编辑" href="javascript:;" onclick="park_edit('编辑','park_add.html','2','','510')"
-                   class="ml-5" style="text-decoration:none">
-                    <i class="layui-icon">&#xe642;</i>
-                </a>
-                <a title="删除" href="javascript:;" onclick="park_del(this,'2')"
+                <a title="删除" href="javascript:;" th:onclick="'park_del(this,'+ ${parking.id} +')'"
                    style="text-decoration:none">
                     <i class="layui-icon">&#xe640;</i>
                 </a>
@@ -235,8 +144,8 @@
         x_admin_show(title,url,w,h);
     }
     //编辑
-    function park_edit (title,url,id,w,h) {
-        url = url+"?id="+id;
+    function park_edit (title,url,me,w,h) {
+        url = url+"?id="+me.name;
         x_admin_show(title,url,w,h);
     }
 
@@ -244,21 +153,20 @@
     function park_del(obj,id){
         layer.confirm('确认要删除吗？',{icon:3,title:'提示信息'},function(index){
             $.ajax({
-                type:"post",
-                url:"xxx",
+                type:"get",
+                url:"/parking/delete",
                 data:{id:id},
                 dataType:"json",
                 success:function(data){
-                    //console.log(data);
-                    if(data.status==1){
+                    if(data.code == 200){
                         //发异步删除数据
                         $(obj).parents("tr").remove();
-                        layer.msg(data.info,{icon:6,time:1000});
+                        layer.msg(data.message,{icon:6,time:1000});
                         setTimeout(function(){
                             window.location.reload();
                         },1000);return false;
                     } else{
-                        layer.msg(data.info,{icon:5,time:1000});return false;
+                        layer.msg(data.message,{icon:5,time:1000});return false;
                     }
                 }
             });

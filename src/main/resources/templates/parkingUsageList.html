@@ -46,145 +46,56 @@
         </div>
     </form>
     <xblock>
-        <button class="layui-btn layui-btn-danger" onclick="delAll()">
-            <i class="layui-icon">&#xe640;</i>批量删除
-        </button>
-        <button class="layui-btn" onclick="usage_add('添加','parkingusageadd.html','1000','600')">
+        <button class="layui-btn" onclick="usage_add('添加','parkingUsage/parkingUsageAdd','1000','600')">
             <i class="layui-icon">&#xe608;</i>添加
         </button>
         <span class="x-right" style="line-height:40px">共有数据：<span class="layui-badge">2</span> 条</span></xblock>
     <table class="layui-table">
         <thead>
         <tr>
-            <th>
-                <input type="checkbox" name="" value="">
-            </th>
-            <th>
-                ID
-            </th>
-            <th>
-                所属小区
-            </th>
-            <th>
-                车位编号
-            </th>
-            <th>
-                车牌号码
-            </th>
-            <th>
-                车辆牌照
-            </th>
-            <th>
-                车辆所有人
-            </th>
-            <th>
-                联系方式
-            </th>
-            <th>
-                使用性质
-            </th>
-            <th>
-                总费用(￥)
-            </th>
-            <th>
-                开始时间
-            </th>
-            <th>
-                截止时间
-            </th>
-            <th>
-                创建时间
-            </th>
-            <th>
-                操作
-            </th>
+            <th>ID</th>
+            <th>所属小区</th>
+            <th>车位编号</th>
+            <th>车牌号码</th>
+            <th>车辆所有人</th>
+            <th>联系方式</th>
+            <th>使用性质</th>
+            <th>总费用(￥)</th>
+            <th>开始时间</th>
+            <th>截止时间</th>
+            <th>创建时间</th>
+            <th>操作</th>
         </tr>
         </thead>
         <tbody id="x-img">
-        <tr>
+        <tr th:each="parkingUsage:${parkingUsageList}">
+            <td th:text="${parkingUsage.id}"></td>
             <td>
-                <input type="checkbox" value="1" name="">
+                <u style="cursor:pointer" onclick="question_show()" th:text="${parkingUsage.communityId}"></u>
             </td>
-            <td>
-                3                        </td>
-            <td>
-                <u style="cursor:pointer" onclick="question_show()">
-                    金华万府                            </u>
+            <td th:text="${parkingUsage.parkId}"></td>
+            <td th:text="${parkingUsage.vehHphm}"></td>
+            <td th:text="${parkingUsage.vehName}"></td>
+            <td th:text="${parkingUsage.phone}"></td>
+            <td class="td-status">
+                <span class="layui-btn layui-btn-danger " th:text="${parkingUsage.status == 0 ? '租' : '借'}"></span>
             </td>
-
-            <td >
-                XY20200103002                        </td>
-            <td >
-                XB00001                        </td>
-            <td >
-                <img src="./images/tx.jpg" width="50" height="30" alt="">
-            </td>
-            <td >
-                admin                        </td>
-            <td >
-                1111111111111                        </td>
-            <td class="td-status"> <span class="layui-btn layui-btn-danger " onclick="start(this,'3',1)"> 售 </span> </td>
-            <td >
-                60                        </td>
-            <td >
-                2020-01-04                        </td>
-            <td >
-                2021-01-04                        </td>
-            <td >
-                2020-01-04 13:46:49                        </td>
+            <td th:text="${parkingUsage.money + '%'}"></td>
+            <td th:text="${parkingUsage.startTime}"></td>
+            <td th:text="${parkingUsage.endTime}"></td>
+            <td th:text="${parkingUsage.creationTime}"></td>
             <td class="td-manage">
-                <a title="编辑" href="javascript:;" onclick="parkusage_edit('编辑','parkingusageadd.html','3','1000','600')"
+                <a title="编辑" href="javascript:;" onclick="parkusage_edit('编辑','parkingUsage/parkingUsageAdd',this,'1000','600')" th:name="${parkingUsage.id}"
                    class="ml-5" style="text-decoration:none">
                     <i class="layui-icon">&#xe642;</i>
                 </a>
-                <a title="删除" href="javascript:;" onclick="parkusage_del(this,'3')"
+                <a title="删除" href="javascript:;" th:onclick="'parkusage_del(this,'+${parkingUsage.id}+')'"
                    style="text-decoration:none">
                     <i class="layui-icon">&#xe640;</i>
                 </a>
             </td>
         </tr>
-        <tr>
-            <td>
-                <input type="checkbox" value="1" name="">
-            </td>
-            <td>
-                2                        </td>
-            <td>
-                <u style="cursor:pointer" onclick="question_show()">
-                    东湖小区                            </u>
-            </td>
 
-            <td >
-                XY20200103001                        </td>
-            <td >
-                XAT0001                        </td>
-            <td >
-                <img src="./images/tx.jpg" width="50" height="30" alt="">
-            </td>
-            <td >
-                admin                        </td>
-            <td >
-                11111111111111111111                        </td>
-            <td class="td-status"> <span class="layui-btn layui-btn-danger " onclick="start(this,'2',1)"> 售 </span> </td>
-            <td >
-                50                        </td>
-            <td >
-                2020-01-04                        </td>
-            <td >
-                2021-01-04                        </td>
-            <td >
-                2020-01-04 12:54:44                        </td>
-            <td class="td-manage">
-                <a title="编辑" href="javascript:;" onclick="parkusage_edit('编辑','parkingusageadd.html','2','1000','600')"
-                   class="ml-5" style="text-decoration:none">
-                    <i class="layui-icon">&#xe642;</i>
-                </a>
-                <a title="删除" href="javascript:;" onclick="parkusage_del(this,'2')"
-                   style="text-decoration:none">
-                    <i class="layui-icon">&#xe640;</i>
-                </a>
-            </td>
-        </tr>
         </tbody>
     </table>
 
@@ -253,8 +164,8 @@
         x_admin_show(title,url,w,h);
     }
     //编辑
-    function parkusage_edit (title,url,id,w,h) {
-        url = url+"?id="+id;
+    function parkusage_edit (title,url,me,w,h) {
+        url = url+"?id="+me.name;
         x_admin_show(title,url,w,h);
     }
 
@@ -262,21 +173,20 @@
     function parkusage_del(obj,id){
         layer.confirm('确认要删除吗？',{icon:3,title:'提示信息'},function(index){
             $.ajax({
-                type:"post",
-                url:"xxxx",
+                type:"get",
+                url:"/parkingUsage/delete",
                 data:{id:id},
                 dataType:"json",
                 success:function(data){
-                    //console.log(data);
-                    if(data.status==1){
+                    if(data.code == 200){
                         //发异步删除数据
                         $(obj).parents("tr").remove();
-                        layer.msg(data.info,{icon:6,time:1000});
+                        layer.msg(data.message,{icon:6,time:1000});
                         setTimeout(function(){
                             window.location.reload();
                         },1000);return false;
                     } else{
-                        layer.msg(data.info,{icon:5,time:1000});return false;
+                        layer.msg(data.message,{icon:5,time:1000});return false;
                     }
                 }
             });

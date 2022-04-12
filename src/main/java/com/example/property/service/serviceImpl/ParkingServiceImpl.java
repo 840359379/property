@@ -7,6 +7,7 @@ import com.example.property.service.ParkingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -17,21 +18,33 @@ public class ParkingServiceImpl implements ParkingService {
 
     @Override
     public CommonResult<Boolean> addParking(Parking parking) {
-        return null;
+        Date date = new Date();
+        Long dateString = date.getTime();
+        parking.setParkId("XY" + dateString);
+        if(parkingMapper.addParking(parking)){
+            return new CommonResult<>(200,"成功",true);
+        }
+        return new CommonResult<>(404,"失败",false);
     }
 
     @Override
     public CommonResult<List<Parking>> selectParking(Parking parking) {
-        return null;
+        return new CommonResult<>(200,"成功",parkingMapper.selectParking(parking));
     }
 
     @Override
     public CommonResult<Boolean> updateParking(Parking parking) {
-        return null;
+        if(parkingMapper.updateParking(parking)){
+            return new CommonResult<>(200,"成功",true);
+        }
+        return new CommonResult<>(404,"失败",false);
     }
 
     @Override
     public CommonResult<Boolean> deleteParking(Parking parking) {
-        return null;
+        if(parkingMapper.deleteParking(parking)){
+            return new CommonResult<>(200,"成功",true);
+        }
+        return new CommonResult<>(404,"失败",false);
     }
 }
