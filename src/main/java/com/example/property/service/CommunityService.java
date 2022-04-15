@@ -14,4 +14,6 @@ public interface CommunityService {
     CommonResult<Boolean> updateCommunity(Community community);
 
     CommonResult<Boolean> deleteCommunity(Community community);
+
+    List<String> selectCommunityName();
 }

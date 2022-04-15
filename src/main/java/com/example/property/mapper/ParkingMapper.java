@@ -15,4 +15,6 @@ public interface ParkingMapper {
     public Boolean updateParking(Parking parking);
 
     public boolean deleteParking(Parking parking);
+
+    public List<Parking> selectParkingCommunity();
 }

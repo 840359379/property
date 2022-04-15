@@ -7,6 +7,7 @@ import com.example.property.service.CommunityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -46,5 +47,15 @@ public class CommunityServiceImpl implements CommunityService {
             return new CommonResult<>(200,"成功",true);
         }
         return new CommonResult<>(404,"失败",false);
+    }
+
+    @Override
+    public List<String> selectCommunityName() {
+        List<Community> communityList = communityMapper.selectCommunity(new Community());
+        List<String> list = new ArrayList<>();
+        communityList.forEach(community -> {
+            list.add(community.getCommunityName());
+        });
+        return list;
     }
 }

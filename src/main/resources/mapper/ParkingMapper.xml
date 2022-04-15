@@ -7,20 +7,29 @@
         VALUES (#{communityId, jdbcType=INTEGER},#{parkId, jdbcType=VARCHAR},#{parkName, jdbcType=VARCHAR}
                ,#{status, jdbcType=VARCHAR})
     </insert>
+
     <update id="updateParking">
         UPDATE parking
         SET communityId = #{communityId, jdbcType=VARCHAR}
           , parkName =#{parkName, jdbcType=VARCHAR}, status = #{status, jdbcType=VARCHAR}
         WHERE id = #{id,jdbcType=INTEGER}
     </update>
+
     <delete id="deleteParking">
         DELETE FROM parking WHERE id = #{id,jdbcType=INTEGER}
     </delete>
+
     <select id="selectParking" resultType="com.example.property.model.Parking">
         SELECT *
         FROM parking
         <where>
             <if test="id != null and id !='' "> and id = #{id,jdbcType=INTEGER}</if>
         </where>
+    </select>
+
+    <select id="selectParkingCommunity" resultType="com.example.property.model.Parking">
+        SELECT count(communityId) id,communityId
+        FROM `parking`
+        GROUP BY communityId
     </select>
 </mapper>

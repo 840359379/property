@@ -15,4 +15,6 @@ public interface CommunityMapper {
     public Boolean updateCommunity(Community community);
 
     public boolean deleteCommunity(Community community);
+
+
 }

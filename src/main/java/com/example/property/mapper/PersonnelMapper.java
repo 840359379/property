@@ -17,4 +17,6 @@ public interface PersonnelMapper {
 
     public boolean deletePersonnel(Personnel home);
 
+    public List<Personnel> selectPersonnelCommunity();
+
 }

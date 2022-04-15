@@ -17,14 +17,23 @@
           , `desc` = #{desc, jdbcType=VARCHAR}
         WHERE id = #{id,jdbcType=INTEGER}
     </update>
+
     <delete id="deletePersonnel">
         DELETE FROM personnel WHERE id = #{id,jdbcType=INTEGER}
     </delete>
+
     <select id="selectPersonnel" resultType="com.example.property.model.Personnel">
         SELECT *
         FROM personnel
         <where>
             <if test="id != null and id !='' "> and id = #{id,jdbcType=INTEGER}</if>
+            <if test="personnelType != null and personnelType!= ''">and personnelType = #{personnelType,jdbcType=INTEGER}</if>
         </where>
+    </select>
+
+    <select id="selectPersonnelCommunity" resultType="com.example.property.model.Personnel">
+        SELECT count(communityId) id,communityId
+        FROM `personnel`
+        GROUP BY communityId
     </select>
 </mapper>

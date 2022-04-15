@@ -4,6 +4,7 @@ import com.example.property.configure.CommonResult;
 import com.example.property.model.Parking;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ParkingService {
 
@@ -14,4 +15,6 @@ public interface ParkingService {
     CommonResult<Boolean> updateParking(Parking parking);
 
     CommonResult<Boolean> deleteParking(Parking parking);
+
+    List<Map<String,Object>> selectParkingCommunity();
 }

@@ -1,6 +1,13 @@
 package com.example.property.controller;
 
+import com.example.property.model.Building;
+import com.example.property.model.Home;
+import com.example.property.model.Personnel;
 import com.example.property.model.User;
+import com.example.property.service.BuildingService;
+import com.example.property.service.HomeService;
+import com.example.property.service.PersonnelService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,13 +23,6 @@ public class HomepageController {
         User user = (User) request.getSession().getAttribute("user");
         model.addAttribute("user",user);
         return "index";
-    }
-
-    @RequestMapping(value = "welcome")
-    public String welcome(HttpServletRequest request,Model model){
-        User user = (User) request.getSession().getAttribute("user");
-        model.addAttribute("user",user);
-        return "welcome";
     }
 
     @RequestMapping(value = "activityList")
